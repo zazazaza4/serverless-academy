@@ -61,10 +61,9 @@ async function selectOption() {
       break;
 
     case "6":
-      const uniqueValues = Array.from(
-        new Set(...memory.words, ...memory.digits)
-      );
-      console.log(uniqueValues);
+      const setValues = new Set([...memory.words, ...memory.digits]);
+      const uniqueArray = Array.from(setValues);
+      console.log(uniqueArray);
       break;
 
     case options.exitCommand:
