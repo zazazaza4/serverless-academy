@@ -40,7 +40,11 @@ async function selectOption() {
 
   switch (choice.trim()) {
     case "1":
-      console.log(memory.words.sort());
+      console.log(
+        memory.words.sort((a, b) =>
+          a.toLowerCase().localeCompare(b.toLowerCase())
+        )
+      );
       break;
 
     case "2":
@@ -52,7 +56,7 @@ async function selectOption() {
       break;
 
     case "4":
-      console.log(memory.words.sort((a, b) => b.length - a.length));
+      console.log(memory.words.sort((a, b) => a.length - b.length));
       break;
 
     case "5":
