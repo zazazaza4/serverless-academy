@@ -1,11 +1,14 @@
-const readline = require("readline");
+const { getUserInput, rl } = require("./userInput");
+const {
+  getUniqueValues,
+  getUniqueWords,
+  sortDigitsDes,
+  sortDigitsAsc,
+  sortWordsByLength,
+  sortWordsByName,
+} = require("./sorting");
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-const memory = {
+const data = {
   words: [],
   digits: [],
 };
@@ -26,48 +29,33 @@ const options = {
   exitCommand: "exit",
 };
 
-async function getUserInput(prompt) {
-  return new Promise((resolve) => {
-    rl.question(prompt, (answer) => {
-      resolve(answer);
-    });
-  });
-}
-
 async function selectOption() {
   const choice = await getUserInput(options.select);
   let isContinue = true;
 
   switch (choice.trim()) {
     case "1":
-      console.log(
-        memory.words.sort((a, b) =>
-          a.toLowerCase().localeCompare(b.toLowerCase())
-        )
-      );
+      console.log(sortWordsByName(data.words));
       break;
 
     case "2":
-      console.log(memory.digits.sort((a, b) => Number(a) - Number(b)));
+      console.log(sortDigitsAsc(data.digits));
       break;
 
     case "3":
-      console.log(memory.digits.sort((a, b) => Number(b) - Number(a)));
+      console.log(sortDigitsDes(data.digits));
       break;
 
     case "4":
-      console.log(memory.words.sort((a, b) => a.length - b.length));
+      console.log(sortWordsByLength(data.words));
       break;
 
     case "5":
-      const uniqueWords = Array.from(new Set(memory.words));
-      console.log(uniqueWords);
+      console.log(getUniqueWords(data.words));
       break;
 
     case "6":
-      const setValues = new Set([...memory.words, ...memory.digits]);
-      const uniqueArray = Array.from(setValues);
-      console.log(uniqueArray);
+      console.log(getUniqueValues(data.words, data.digits));
       break;
 
     case options.exitCommand:
@@ -81,8 +69,8 @@ async function selectOption() {
   }
 
   if (isContinue) {
-    memory.digits = [];
-    memory.words = [];
+    data.digits = [];
+    data.words = [];
     start();
   }
 }
@@ -94,7 +82,7 @@ function showMenu() {
   });
   console.log("\n");
 
-  selectOption();
+  selectOption(data);
 }
 
 async function start() {
@@ -106,9 +94,9 @@ async function start() {
       return;
     }
     if (!isNaN(value)) {
-      memory.digits.push(value);
+      data.digits.push(value);
     } else {
-      memory.words.push(value);
+      data.words.push(value);
     }
   });
 
