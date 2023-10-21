@@ -72,15 +72,15 @@ async function start() {
   const { isSearch } = await inquirer.prompt([prompts.isSearch]);
 
   if (isSearch) {
-    let users = await loadUsers();
-    showUsers(users);
+    const loadedUsers = await loadUsers();
+    showUsers(loadedUsers);
 
     const { searchName } = await inquirer.prompt([prompts.searchName]);
 
-    findUserByName(searchName, users);
+    findUserByName(searchName, loadedUsers);
   }
 }
 
 start().catch((err) => {
-  console.log(err);
+  console.error(err);
 });
