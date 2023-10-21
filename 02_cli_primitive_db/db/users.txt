@@ -1,0 +1,7 @@
+{"name":"Anna","gender":"female","age":12}
+{"name":"Bob","gender":"male","age":32}
+{"name":"Alex","gender":"male","age":52}
+{"name":"David","gender":"male","age":62}
+{"name":"Ella","gender":"female","age":25}
+{"name":"Bill","gender":"male","age":20}
+{"name":"Yan","gender":"male","age":20}
