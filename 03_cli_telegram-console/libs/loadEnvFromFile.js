@@ -1,11 +1,10 @@
 const fs = require("fs");
 
-function loadEnv(path) {
+const loadEnv = (path = ".env") => {
   try {
-    const envContent = fs.readFileSync(".env", "utf8");
+    const env = fs.readFileSync(path, "utf8");
 
-    const lines = envContent.split("\n");
-    for (const line of lines) {
+    env.split("\n").forEach((line) => {
       const trimmedLine = line.trim();
       if (trimmedLine && !trimmedLine.startsWith("#")) {
         const [key, value] = trimmedLine.split("=");
@@ -13,10 +12,10 @@ function loadEnv(path) {
           process.env[key] = value;
         }
       }
-    }
+    });
   } catch (e) {
-    console.error("Error loading environment variables", e);
+    console.error(`Error loading environment variables: ${e}`);
   }
-}
+};
 
 loadEnv();
