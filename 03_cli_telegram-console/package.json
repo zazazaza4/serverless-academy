@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "send-message": "node app.js send-message",
-    "send-photo": "node app.js send-photo",
+    "message": "node app.js message",
+    "photo": "node app.js photo",
     "bot": "node telegramBot.js"
   },
   "keywords": [],
