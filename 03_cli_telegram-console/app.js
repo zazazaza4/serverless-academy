@@ -6,13 +6,13 @@ program.version("1.0.0").description("CLI: TELEGRAM CONSOLE SENDER");
 
 const commands = [
   {
-    cmd: "message <message>",
+    cmd: "send-message <message>",
     alias: "m",
     description: "Send a message to the Telegram bot",
     action: sendMessage,
   },
   {
-    cmd: "photo <path>",
+    cmd: "send-photo <path>",
     alias: "p",
     description: "Send a photo to the Telegram bot",
     action: sendPhoto,
