@@ -62,14 +62,14 @@ const formatWeather = (weatherData) => {
 
 const getForecast = async (city, interval = 1) => {
   try {
-    if (!inc) {
+    if (!interval) {
       throw new Error("Invalid interval");
     }
 
     const list = await getWeather(city);
 
     const formattedMessages = [`Weather in ${city}`];
-    for (let i = 0; i < NUM_FORECAST_ITEMS; i += inc) {
+    for (let i = 0; i < NUM_FORECAST_ITEMS; i += interval) {
       const weather = list[i];
       formattedMessages.push(formatWeather(weather));
     }
