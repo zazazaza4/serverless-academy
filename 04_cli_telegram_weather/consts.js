@@ -6,8 +6,8 @@ const weatherToken = process.env.API_WEATHER_KEY;
 
 const city = "Kharkiv";
 const intervalEnum = {
-  3: 1,
-  6: 2,
+  INTERVAL_3: 1,
+  INTERVAL_6: 2,
 };
 const COMMANDS = {
   START: /\/start/,

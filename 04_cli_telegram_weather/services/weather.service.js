@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { weatherToken, intervalEnum } = require("../consts");
+const { weatherToken } = require("../consts");
 
 const NUM_FORECAST_ITEMS = 5;
 
@@ -60,10 +60,8 @@ const formatWeather = (weatherData) => {
        Wind Speed: ${formattedData.windSpeed} m/s`;
 };
 
-const getForecast = async (city, interval = 3) => {
+const getForecast = async (city, interval = 1) => {
   try {
-    const inc = intervalEnum[interval];
-
     if (!inc) {
       throw new Error("Invalid interval");
     }

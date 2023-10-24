@@ -1,6 +1,6 @@
 const TelegramBot = require("node-telegram-bot-api");
 
-const { botToken, city, COMMANDS } = require("./consts");
+const { botToken, city, COMMANDS, intervalEnum } = require("./consts");
 const weatherService = require("./services/weather.service");
 
 const startBot = () => {
@@ -35,12 +35,18 @@ const startBot = () => {
     }
 
     if (messageText === COMMANDS.INTERVAL_3) {
-      const weather = await weatherService.getForecast(city, 3);
+      const weather = await weatherService.getForecast(
+        city,
+        intervalEnum.INTERVAL_3
+      );
       bot.sendMessage(chatId, weather);
     }
 
     if (messageText === COMMANDS.INTERVAL_6) {
-      const weather = await weatherService.getForecast(city, 6);
+      const weather = await weatherService.getForecast(
+        city,
+        intervalEnum.INTERVAL_6
+      );
       bot.sendMessage(chatId, weather);
     }
   });
