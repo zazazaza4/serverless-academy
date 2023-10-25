@@ -1,7 +1,7 @@
 {
   "name": "cli_primitive_db",
   "version": "1.0.0",
-  "description": "",
+  "description": "2. CLI: PRIMITIVE DB",
   "main": "app.js",
   "scripts": {
     "start": "node index.js"

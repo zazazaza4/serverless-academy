@@ -1,7 +1,7 @@
 {
   "name": "04_cli_telegram_weather",
   "version": "1.0.0",
-  "description": "",
+  "description": "5. TELEGRAM BOT: EXCHANGE RATES",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"

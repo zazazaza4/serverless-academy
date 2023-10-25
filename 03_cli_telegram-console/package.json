@@ -1,7 +1,7 @@
 {
   "name": "03_cli_telegram-console",
   "version": "1.0.0",
-  "description": "",
+  "description": "3. CLI: TELEGRAM CONSOLE SENDER",
   "main": "index.js",
   "scripts": {
     "message": "node app.js message",
@@ -9,7 +9,7 @@
     "bot": "node telegramBot.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yaroslav Osmukha",
   "license": "ISC",
   "dependencies": {
     "commander": "^11.1.0",
