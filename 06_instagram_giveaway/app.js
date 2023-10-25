@@ -3,15 +3,14 @@ const path = require("path");
 const { getPathToFilesAsync } = require("./utils/getPathToFiles");
 const { getUniqueWordsFromFile } = require("./utils/getUniqueWordsFromFile");
 
-const getUniqueValuesFromFiles = async () => {
+const getUniqueValuesFromFiles = async (dir = "words") => {
   const memory = new Map();
 
-  const dirPath = path.join(__dirname, "words");
+  const dirPath = path.join(__dirname, dir);
   const wordsPath = await getPathToFilesAsync(dirPath);
-  const wordsPromise = wordsPath.map(async (wordPath) => {
-    const uniqueWords = await getUniqueWordsFromFile(wordPath);
-    return uniqueWords;
-  });
+  const wordsPromise = wordsPath.map(
+    async (wordPath) => await getUniqueWordsFromFile(wordPath)
+  );
 
   const uniqueWordsArrays = await Promise.all(wordsPromise);
 
@@ -38,7 +37,7 @@ const existInAtleastTen = (array, atLeast = 10) => {
 };
 
 const start = async () => {
-  console.time();
+  console.time("time");
   const { memory, fileCount } = await getUniqueValuesFromFiles();
   const arrayCount = Array.from(memory.values());
 
@@ -50,7 +49,7 @@ const start = async () => {
     `Words existing in at least 10 files: ${existInAtleastTen(arrayCount)}`
   ); // returns 73245
 
-  console.timeEnd(); // 2.215s
+  console.timeEnd("time"); // time: 1.932s
 };
 
 start();
