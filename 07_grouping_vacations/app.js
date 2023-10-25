@@ -1,19 +1,19 @@
 const vacations = require("./data/vacations.json");
 
 const groupVacations = (vacations) => {
-  const data = new Map();
+  const data = {};
 
   vacations.forEach(({ user, startDate, endDate }) => {
     const { _id, name } = user;
 
-    if (!data.has(_id)) {
-      data.set(_id, { userId: _id, userName: name, vacations: [] });
+    if (!data.hasOwnProperty(_id)) {
+      data[_id] = { userId: _id, userName: name, vacations: [] };
     }
 
-    data.get(_id).vacations.push({ startDate, endDate });
+    data[_id].vacations.push({ startDate, endDate });
   });
 
-  return Array.from(data.values());
+  return Object.values(data);
 };
 
 const start = () => {
