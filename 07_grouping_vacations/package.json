@@ -1,0 +1,12 @@
+{
+  "name": "07_grouping_vacations",
+  "version": "1.0.0",
+  "description": "7. GROUPING VACATIONS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Yaroslav Osmukha",
+  "license": "ISC"
+}
