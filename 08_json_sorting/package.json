@@ -1,0 +1,12 @@
+{
+  "name": "08_json_sorting",
+  "version": "1.0.0",
+  "description": "8. JSON SORTING",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Yaroslav Osmukha",
+  "license": "ISC"
+}
