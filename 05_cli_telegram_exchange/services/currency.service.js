@@ -1,51 +1,92 @@
-const axios = require("axios");
-const NodeCache = require("node-cache");
+const axios = require('axios');
+const NodeCache = require('node-cache');
+
+const { currencyEnum } = require('../consts');
 
 const currencyCache = new NodeCache({ stdTTL: 300 });
 
-const getCurrency = async (type) => {
+const Banks = {
+  MONOBANK: {
+    url: 'https://api.monobank.ua/bank/currency',
+    name: 'MonoBank',
+    action([USD, EUR]) {
+      return {
+        USD: {
+          rateBuy: USD.rateBuy,
+          rateSell: USD.rateSell,
+        },
+        EUR: {
+          rateBuy: EUR.rateBuy,
+          rateSell: EUR.rateSell,
+        },
+      };
+    },
+  },
+  PRIVATBANK: {
+    name: 'Privatbank',
+    url: 'https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=5',
+    action(data) {
+      return data.reduce((acc, currency) => {
+        if (currencyEnum[currency.ccy]) {
+          acc[currency.ccy] = {
+            rateBuy: currency.buy,
+            rateSell: currency.sale,
+          };
+        }
+        return acc;
+      }, {});
+    },
+  },
+};
+
+const fetchCurrency = async ({ name, url, action }) => {
   try {
-    const currencyFetched = await fetchCurrency(type);
+    const { data } = await axios.get(url);
 
-    return formatCurrency(currencyFetched, type);
+    const currencyData = {
+      bank: name,
+      ...action(data),
+    };
+
+    currencyCache.set(`${name}Data`, currencyData);
+
+    return currencyData;
   } catch (error) {
-    const cachedData = currencyCache.get("currencyData");
+    const cachedData = currencyCache.get(`${name}Data`);
 
-    if (cachedData && cachedData[type]) {
-      const currency = cachedData[type];
-      return formatCurrency(currency, type);
-    } else {
-      return "На жаль, наразі не вдалося отримати інформацію.";
+    if (cachedData) {
+      return cachedData;
     }
+    throw new Error(`Error fetching or accessing cached data for ${name}`);
   }
 };
 
-const formatCurrency = (currency, type) => {
-  const { rateBuy, rateSell } = currency;
-
-  return `Купівля/Продаж: ${rateBuy}/${rateSell} ${type}`;
+const formatCurrency = (type, ...currency) => {
+  if (currency.length > 0) {
+    return currency.reduce((acc, data) => {
+      const { rateBuy, rateSell } = data[type];
+      return (
+        acc +
+        `${data.bank}: Купівля/Продаж: ${Number(rateBuy).toFixed(2)}/${Number(
+          rateSell
+        ).toFixed(2)} ${type} \n`
+      );
+    }, '');
+  }
+  return 'Недостатньо даних для відображення валюти.';
 };
 
-const fetchCurrency = async (type) => {
+const getCurrency = async (currency) => {
   try {
-    const { data } = await axios.get("https://api.monobank.ua/bank/currency");
+    const dates = await Promise.all([
+      fetchCurrency(Banks.MONOBANK),
+      fetchCurrency(Banks.PRIVATBANK),
+    ]);
 
-    const currencyData = {
-      USDT: {
-        rateBuy: data[0].rateBuy,
-        rateSell: data[0].rateSell,
-      },
-      EUR: {
-        rateBuy: data[1].rateBuy,
-        rateSell: data[1].rateSell,
-      },
-    };
-
-    currencyCache.set("currencyData", currencyData);
-
-    return currencyData[type];
+    return formatCurrency(currency, ...dates);
   } catch (error) {
-    throw new Error(`Failed to fetch currency data: ${error.message}`);
+    console.error(error);
+    return 'На жаль, наразі не вдалося отримати інформацію.';
   }
 };
 

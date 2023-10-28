@@ -1,4 +1,4 @@
-const TelegramBot = require("node-telegram-bot-api");
+const TelegramBot = require('node-telegram-bot-api');
 
 const {
   botToken,
@@ -6,10 +6,10 @@ const {
   COMMANDS,
   intervalEnum,
   currencyEnum,
-} = require("./consts");
-const currencyService = require("./services/currency.service");
-const weatherService = require("./services/weather.service");
-const { generateKeyboard } = require("./utils/keybords");
+} = require('./consts');
+const currencyService = require('./services/currency.service');
+const weatherService = require('./services/weather.service');
+const { generateKeyboard } = require('./utils/keybords');
 
 const startBot = () => {
   const bot = new TelegramBot(botToken, { polling: true });
@@ -23,14 +23,14 @@ const startBot = () => {
     bot.sendMessage(chatId, text, keyboard);
   });
 
-  bot.on("message", async (msg) => {
+  bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const messageText = msg.text;
 
     switch (messageText) {
       case COMMANDS.WEATHER:
         const weatherText =
-          "Виберіть інтервал оновлення погоди або швидкість вітру:";
+          'Виберіть інтервал оновлення погоди або швидкість вітру:';
         const weatherKeyboard = generateKeyboard([
           [COMMANDS.INTERVAL_3, COMMANDS.INTERVAL_6],
           COMMANDS.WIND,
@@ -41,9 +41,9 @@ const startBot = () => {
 
       case COMMANDS.CURRENCY:
         const currencyText =
-          "Виберіть валюту для отримання інформації про її вартість: ";
+          'Виберіть валюту для отримання інформації про її вартість: ';
         const currencyKeyboard = generateKeyboard([
-          [COMMANDS.USDT, COMMANDS.EUR],
+          [COMMANDS.USD, COMMANDS.EUR],
           COMMANDS.PREVIOUS,
         ]);
         await bot.sendMessage(chatId, currencyText, currencyKeyboard);
@@ -75,15 +75,13 @@ const startBot = () => {
         await bot.sendMessage(chatId, currencyEUR);
         break;
 
-      case COMMANDS.USDT:
-        const currencyUSDT = await currencyService.getCurrency(
-          currencyEnum.USDT
-        );
-        await bot.sendMessage(chatId, currencyUSDT);
+      case COMMANDS.USD:
+        const currencyUSD = await currencyService.getCurrency(currencyEnum.USD);
+        await bot.sendMessage(chatId, currencyUSD);
         break;
 
       case COMMANDS.PREVIOUS:
-        const text = "Повернення до головного меню.";
+        const text = 'Повернення до головного меню.';
         const previousKeyboard = generateKeyboard([
           COMMANDS.WEATHER,
           COMMANDS.CURRENCY,
