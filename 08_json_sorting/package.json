@@ -4,9 +4,13 @@
   "description": "8. JSON SORTING",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "npx jest ./__test__"
   },
   "keywords": [],
   "author": "Yaroslav Osmukha",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
 }
