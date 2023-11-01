@@ -6,7 +6,10 @@ const pool = require('../db');
 class TokenService {
   async generateTokens(user) {
     try {
-      const payload = { id: user.id };
+      const payload = {
+        id: user.id,
+        password: user.password,
+      };
 
       const accessToken = jwt.sign(payload, keys.jwt.secretAccess, {
         expiresIn: keys.jwt.accessLife,
