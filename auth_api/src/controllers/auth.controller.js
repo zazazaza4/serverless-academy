@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 
 const userService = require('../services/user.service');
 const serverResponse = require('../utils/responses');
-const generateTokens = require('../utils/generateTokens');
 const {
   INTERNAL_SERVER_ERROR,
   SUCCESSFUL_CREATED,
@@ -10,6 +9,7 @@ const {
   SUCCESSFUL,
   BAD_REQUEST,
 } = require('../constants/messages');
+const tokenService = require('../services/userToken.service');
 
 class AuthController {
   async signUp(req, res) {
@@ -18,9 +18,17 @@ class AuthController {
 
       const user = await userService.create(email, password);
 
-      serverResponse.sendSuccess(res, user, SUCCESSFUL_CREATED);
+      const { accessToken, refreshToken } = await tokenService.generateTokens(
+        user
+      );
+
+      const data = {
+        id: user.id,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      };
+      serverResponse.sendSuccess(res, data, SUCCESSFUL_CREATED);
     } catch (err) {
-      console.error(err);
       serverResponse.sendError(res, CONFLICT);
     }
   }
@@ -37,7 +45,9 @@ class AuthController {
         serverResponse.sendError(res, BAD_REQUEST);
       }
 
-      const { accessToken, refreshToken } = await generateTokens(user);
+      const { accessToken, refreshToken } = await tokenService.generateTokens(
+        user
+      );
 
       const data = {
         id: user.id,
@@ -46,7 +56,6 @@ class AuthController {
       };
       serverResponse.sendSuccess(res, data, SUCCESSFUL);
     } catch (err) {
-      console.error(err);
       serverResponse.sendError(res, INTERNAL_SERVER_ERROR);
     }
   }
