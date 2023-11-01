@@ -5,7 +5,7 @@ const {
   AUTHENTICATION_FAILED,
 } = require('../constants/messages');
 
-const auth = async (req, res, next) => {
+const auth = (req, res, next) => {
   try {
     const [bearer, token] = req?.headers?.authorization?.split(' ');
 
