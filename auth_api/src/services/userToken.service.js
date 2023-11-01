@@ -8,7 +8,6 @@ class TokenService {
     try {
       const payload = {
         id: user.id,
-        password: user.password,
       };
 
       const accessToken = jwt.sign(payload, keys.jwt.secretAccess, {
