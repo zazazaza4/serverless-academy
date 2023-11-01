@@ -42,7 +42,7 @@ class AuthController {
       const passwordIsValid = await bcrypt.compare(password, user.password);
 
       if (!passwordIsValid) {
-        serverResponse.sendError(res, BAD_REQUEST);
+        return serverResponse.sendError(res, BAD_REQUEST);
       }
 
       const { accessToken, refreshToken } = await tokenService.generateTokens(
