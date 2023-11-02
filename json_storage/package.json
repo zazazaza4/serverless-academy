@@ -1,0 +1,18 @@
+{
+  "name": "json_storage",
+  "version": "1.0.0",
+  "description": "A full clone of jsonbase.com",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}
