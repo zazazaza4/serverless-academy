@@ -2,22 +2,27 @@ const router = require('express').Router();
 
 const getIP = require('../middleware/ip.middleware');
 const loadIPData = require('../middleware/loadIPdata.middleware');
-const binarySearch = require('../utils/binarySearch');
+const searchByIP = require('../utils/searchByIP');
+const { intToIP } = require('../utils/ipConversion');
 
 router.get('/location', getIP, loadIPData, async (req, res) => {
   try {
-    const result = binarySearch(req.dbLocation, req.userIP);
+    const { userIP, userIntIP, dbLocation } = req;
+
+    const result = searchByIP(dbLocation, userIntIP);
+
+    console.log(userIntIP);
 
     if (!result) {
       return res.json({ error: 'Not Found' });
     }
 
     const data = {
-      userIP: req.ip,
+      userIP: userIP,
       country: result.country,
       range: {
-        to: result.to,
-        from: result.from,
+        to: intToIP(result.to),
+        from: intToIP(result.from),
       },
     };
 
