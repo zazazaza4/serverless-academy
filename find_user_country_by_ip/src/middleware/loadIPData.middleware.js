@@ -1,4 +1,4 @@
-const readCSVFile = require('../utils/readCSV');
+const readCSVFile = require('../utils/csv/readCSV');
 
 let results = [];
 
@@ -11,7 +11,7 @@ const loadIPData = async (req, res, next) => {
     }
   }
 
-  req.dbLocation = results;
+  req.dbLocations = results;
   next();
 };
 
