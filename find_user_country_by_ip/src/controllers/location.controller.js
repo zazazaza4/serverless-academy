@@ -1,5 +1,5 @@
 const { intToIP } = require('../utils/ip/ipConversion');
-const findInRange = require('../utils/ip/findInRange');
+const findInRange = require('../utils/findInRange');
 
 class LocationController {
   async getLocation(req, res) {
