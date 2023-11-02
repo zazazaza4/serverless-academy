@@ -2,16 +2,15 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const locationRoute = require('./routes/location.route');
+const keys = require('./configs/keys');
+const routes = require('./routes');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
 
-app.use('/', locationRoute);
+app.use(routes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(keys.port, () => {
+  console.log(`Server running in ${keys.app.mode} mode on port ${keys.port}`);
 });
