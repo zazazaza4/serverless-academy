@@ -1,15 +1,16 @@
-const ipToInt = require('../utils/ipToInt');
+const { ipToInt } = require('../utils/ipConversion');
 
 const getIP = (req, res, next) => {
   const userIp =
-    request.headers['cf-connecting-ip'] ||
-    request.headers['x-real-ip'] ||
-    request.headers['x-forwarded-for'] ||
-    request.socket.remoteAddress ||
+    req.headers['x-forwarded-for'] ||
+    req.socket.remoteAddress ||
+    req.headers['x-real-ip'] ||
+    req.headers['cf-connecting-ip'] ||
     '';
 
-  req.ip = userIp;
-  req.userIP = ipToInt(userIp);
+  req.userIP = userIp;
+  req.userIntIP = ipToInt(userIp);
+
   next();
 };
 
