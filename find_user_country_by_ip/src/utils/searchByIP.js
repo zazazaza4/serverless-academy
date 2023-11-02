@@ -1,4 +1,4 @@
-const binarySearch = (arr, target) => {
+const searchByIP = (arr, target) => {
   let start = 0;
   let end = arr.length - 1;
 
@@ -6,9 +6,10 @@ const binarySearch = (arr, target) => {
     let mid = Math.floor((start + end) / 2);
 
     const { from, to } = arr[mid];
+
     if (Number(from) <= target && target <= Number(to)) {
       return arr[mid];
-    } else if (Number(to) < target && Number(from) < target) {
+    } else if (Number(to) < target) {
       start = mid + 1;
     } else {
       end = mid - 1;
@@ -18,4 +19,4 @@ const binarySearch = (arr, target) => {
   return null;
 };
 
-module.exports = binarySearch;
+module.exports = searchByIP;
