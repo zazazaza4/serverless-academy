@@ -1,5 +1,8 @@
 const { intToIP } = require('../utils/ip/ipConversion');
 const findInRange = require('../utils/findInRange');
+const serverResponse = require('../utils/responses');
+const { INTERNAL_SERVER_ERROR } = require('../constants/messages');
+const logger = require('../utils/logger');
 
 class LocationController {
   async getLocation(req, res) {
@@ -9,7 +12,7 @@ class LocationController {
       const result = findInRange(dbLocations, userIntIP);
 
       if (!result) {
-        return res.json({ error: 'Not Found' });
+        throw new Error('Location not found within the provided range');
       }
 
       const data = {
@@ -21,10 +24,10 @@ class LocationController {
         },
       };
 
-      res.json(data);
+      serverResponse.sendSuccess(res, data);
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: 'Server Error' });
+      logger.error(error);
+      serverResponse.sendError(res, INTERNAL_SERVER_ERROR);
     }
   }
 }
