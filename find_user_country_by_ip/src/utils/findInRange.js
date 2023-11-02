@@ -1,4 +1,4 @@
-const searchByIP = (arr, target) => {
+const findInRange = (arr, target) => {
   let start = 0;
   let end = arr.length - 1;
 
@@ -19,4 +19,4 @@ const searchByIP = (arr, target) => {
   return null;
 };
 
-module.exports = searchByIP;
+module.exports = findInRange;

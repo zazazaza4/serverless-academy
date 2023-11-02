@@ -1,12 +1,12 @@
 const { intToIP } = require('../utils/ip/ipConversion');
-const searchByIP = require('../utils/ip/searchByIP');
+const findInRange = require('../utils/ip/findInRange');
 
 class LocationController {
   async getLocation(req, res) {
     try {
       const { userIP, userIntIP, dbLocations } = req;
 
-      const result = searchByIP(dbLocations, userIntIP);
+      const result = findInRange(dbLocations, userIntIP);
 
       if (!result) {
         return res.json({ error: 'Not Found' });
