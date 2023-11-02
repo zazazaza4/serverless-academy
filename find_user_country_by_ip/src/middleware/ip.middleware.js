@@ -1,4 +1,4 @@
-const { ipToInt } = require('../utils/ipConversion');
+const { ipToInt } = require('../utils/ip/ipConversion');
 
 const getIP = (req, res, next) => {
   const userIp =
