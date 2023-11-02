@@ -10,6 +10,7 @@ const {
   BAD_REQUEST,
 } = require('../constants/messages');
 const tokenService = require('../services/userToken.service');
+const logger = require('../utils/logger');
 
 class AuthController {
   async signUp(req, res) {
@@ -28,7 +29,8 @@ class AuthController {
         refreshToken: refreshToken,
       };
       serverResponse.sendSuccess(res, data, SUCCESSFUL_CREATED);
-    } catch (err) {
+    } catch (error) {
+      logger.error(error.message);
       serverResponse.sendError(res, CONFLICT);
     }
   }
@@ -55,7 +57,8 @@ class AuthController {
         refreshToken: refreshToken,
       };
       serverResponse.sendSuccess(res, data, SUCCESSFUL);
-    } catch (err) {
+    } catch (error) {
+      logger.error(error.message);
       serverResponse.sendError(res, INTERNAL_SERVER_ERROR);
     }
   }

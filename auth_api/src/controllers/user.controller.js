@@ -1,6 +1,7 @@
 const userService = require('../services/user.service');
 const serverResponse = require('../utils/responses');
 const { INTERNAL_SERVER_ERROR, SUCCESSFUL } = require('../constants/messages');
+const logger = require('../utils/logger');
 
 class UserController {
   async getMe(req, res) {
@@ -11,6 +12,7 @@ class UserController {
 
       serverResponse.sendSuccess(res, { id, email }, SUCCESSFUL);
     } catch (error) {
+      logger.error(error.message);
       serverResponse.sendError(res, INTERNAL_SERVER_ERROR);
     }
   }
