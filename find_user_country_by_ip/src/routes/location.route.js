@@ -6,7 +6,7 @@ const binarySearch = require('../utils/binarySearch');
 
 router.get('/location', getIP, loadIPData, async (req, res) => {
   try {
-    const result = binarySearch(results, req.userIP);
+    const result = binarySearch(req.dbLocation, req.userIP);
 
     if (!result) {
       return res.json({ error: 'Not Found' });
@@ -23,6 +23,7 @@ router.get('/location', getIP, loadIPData, async (req, res) => {
 
     res.json(data);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Server Error' });
   }
 });

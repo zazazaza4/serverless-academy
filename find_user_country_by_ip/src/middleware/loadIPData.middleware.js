@@ -11,7 +11,7 @@ const loadIPData = async (req, res, next) => {
     }
   }
 
-  req.db = results;
+  req.dbLocation = results;
   next();
 };
 
