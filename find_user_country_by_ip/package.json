@@ -4,7 +4,8 @@
   "description": "A web application in Express, allocating an endpoint by which a server-hosted algorithm can detect where the user is coming from and return both the IP address value and the country from which the request was made.",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "dev": "nodemon --env-file=.env src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +13,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
-    "dotenv": "^16.3.1",
     "express": "^4.18.2"
   }
 }
