@@ -1,6 +1,6 @@
 module.exports = {
   app: {
-    name: 'Auth API',
+    name: 'JSON_BASE',
     apiURL: '',
   },
   port: process.env.PORT || 5000,
