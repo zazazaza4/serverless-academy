@@ -1,16 +1,15 @@
 const Url = require('../models/Url');
 const { APIError } = require('../constants/errors');
-const generateUrl = require('../utils/generateUrl');
+const generateUrl = require('../utils/url/generateUrl');
 
 class UrlService {
-  async createShortUrl(origUrl) {
+  async createShortUrl(origUrl, baseURL) {
     let existingUrl = await Url.findOne({ origUrl });
 
     if (existingUrl) {
       throw new APIError('URL already has a short version');
     }
 
-    const base = `http://localhost:5050`;
     const shortUrl = generateUrl();
 
     const newUrl = new Url({
@@ -21,7 +20,7 @@ class UrlService {
 
     await newUrl.save();
 
-    return { shortUrl: `${base}/${shortUrl}` };
+    return { shortUrl: `${baseURL}/${shortUrl}` };
   }
 
   async getOriginalUrl(shortUrl) {
