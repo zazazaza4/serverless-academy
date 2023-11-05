@@ -3,6 +3,7 @@ const findInRange = require('../utils/findInRange');
 const serverResponse = require('../utils/responses');
 const { INTERNAL_SERVER_ERROR } = require('../constants/messages');
 const logger = require('../utils/logger');
+const { APIError } = require('../constants/errors');
 
 class LocationController {
   async getLocation(req, res) {
@@ -12,7 +13,7 @@ class LocationController {
       const result = findInRange(dbLocations, userIntIP);
 
       if (!result) {
-        throw new Error('Location not found within the provided range');
+        throw new APIError('Location not found within the provided range');
       }
 
       const data = {
@@ -27,7 +28,12 @@ class LocationController {
       serverResponse.sendSuccess(res, data);
     } catch (error) {
       logger.error(error);
-      serverResponse.sendError(res, INTERNAL_SERVER_ERROR);
+
+      if (error instanceof APIError) {
+        serverResponse.sendError(res, { error: error.message });
+      } else {
+        serverResponse.sendError(res, INTERNAL_SERVER_ERROR);
+      }
     }
   }
 }
