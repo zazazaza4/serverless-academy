@@ -1,7 +1,9 @@
 const router = require('express').Router();
 
-router.get('/:json_path', () => {});
+const jsonController = require('../../controllers/json.controller');
 
-router.put('/:json_path', () => {});
+router.get('/:json_path', jsonController.getJSON);
+
+router.put('/:json_path', jsonController.saveJSON);
 
 module.exports = router;
