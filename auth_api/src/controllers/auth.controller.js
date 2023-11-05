@@ -11,6 +11,7 @@ const {
 } = require('../constants/messages');
 const tokenService = require('../services/userToken.service');
 const logger = require('../utils/logger');
+const { APIError } = require('../constants/errors');
 
 class AuthController {
   async signUp(req, res) {
@@ -31,7 +32,12 @@ class AuthController {
       serverResponse.sendSuccess(res, data, SUCCESSFUL_CREATED);
     } catch (error) {
       logger.error(error.message);
-      serverResponse.sendError(res, CONFLICT);
+
+      if (error instanceof APIError) {
+        serverResponse.sendError(res, { error: error.message });
+      } else {
+        serverResponse.sendError(res, CONFLICT);
+      }
     }
   }
 
@@ -59,7 +65,12 @@ class AuthController {
       serverResponse.sendSuccess(res, data, SUCCESSFUL);
     } catch (error) {
       logger.error(error.message);
-      serverResponse.sendError(res, INTERNAL_SERVER_ERROR);
+
+      if (error instanceof APIError) {
+        serverResponse.sendError(res, { error: error.message });
+      } else {
+        serverResponse.sendError(res, CONFLICT);
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 
+const { APIError } = require('../constants/errors');
 const pool = require('../db');
 
 class UserService {
@@ -16,7 +17,7 @@ class UserService {
     const existingUser = await pool.query(queryFinding, [email]);
 
     if (existingUser.rows.length > 0) {
-      throw new Error('User with this email already exists');
+      throw new APIError('User with this email already exists');
     }
 
     const queryText =
@@ -36,7 +37,7 @@ class UserService {
     const user = await pool.query(queryText, params);
 
     if (!user.rows[0]) {
-      throw new Error('User with this email does not exists');
+      throw new APIError('User with this email does not exists');
     }
     return user.rows[0];
   }
