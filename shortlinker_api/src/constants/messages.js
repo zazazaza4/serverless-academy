@@ -13,4 +13,8 @@ module.exports = {
     code: 200,
     success: true,
   },
+  SUCCESSFUL_CREATED: {
+    code: 201,
+    success: true,
+  },
 };
