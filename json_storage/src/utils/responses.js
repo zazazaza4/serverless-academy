@@ -14,11 +14,12 @@ const serverResponse = {
   },
   sendError: (res, message = BAD_REQUEST) => {
     const responseMessage = {
+      code: message.code || 400,
       success: false,
       error: message.error,
     };
 
-    return res.status(message.code).json(responseMessage);
+    return res.status(responseMessage.code).json(responseMessage);
   },
 };
 
